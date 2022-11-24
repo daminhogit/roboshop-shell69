@@ -35,11 +35,11 @@ STAT $?
 
 cd mongodb-main
 
-PRINT ""
+PRINT "Load Catalogue Schema"
 mongo < catalogue.js &>>$LOG
 STAT $?
 
-PRINT ""
+PRINT "Load Users Schema"
 mongo < users.js &>>$LOG
 STAT $?
 
