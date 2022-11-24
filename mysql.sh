@@ -45,3 +45,19 @@ if [ $? -eq 0 ]; then
 fi
 STAT $?
 
+PRINT "Downloading App Content"
+curl -s -L -o /tmp/mysql.zip "https://github.com/roboshop-devops-project/mysql/archive/main.zip" &>>$LOG
+ STAT $?
+
+cd /tmp
+
+PRINT "Extract App Content"
+unzip mysql.zip &>>$LOG
+STAT $?
+
+
+cd mysql-main
+
+PRINT "Loading Shipping schema"
+mysql -u root -p${ROBOSHOP_MYSQL_PASSWORD} <shipping.sql &>>$LOG
+STAT $?
