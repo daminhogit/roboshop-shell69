@@ -1,10 +1,13 @@
+COMPONENT=mysql
+source common.sh
+
+
 if [ -z "$1" ]; then
   echo  Input agument Password is needed
   exit
 fi
 
 ROBOSHOP_MYSQL_PASSWORD=$1
-
 
 
 PRINT "Downloading MySQL Repo File"
