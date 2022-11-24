@@ -5,7 +5,7 @@ source common.sh
 
 PRINT "Install Redis Repo"
 dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y &>>$LOG
-STAT$?
+STAT $?
 
 PRINT "Enabling Redis Repo"
 dnf module enable redis:remi-6.2 -y &>>$LOG
