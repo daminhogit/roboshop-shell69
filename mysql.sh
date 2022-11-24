@@ -36,5 +36,11 @@ then
   echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '${ROBOSHOP_MYSQL_PASSWORD}';" > /tmp/root-pass-sql
   DEFAULT_PASSWORD=$(grep 'A temporary password' /var/log/mysqld.log | awk '{print $NF}')
   cat /tmp/root-pass-sql | mysql --connect-expired-password -uroot -p"${DEFAULT_PASSWORD}"
-
 fi
+
+echo "show plugins" | mysql -uroot -pRoboShop@1 | grep validate_password &>>$LOG
+if [ $? -eq 0 ]; then
+  echo " uninstall plugin validate_password;" | mysql -uroot -p${ROBOSHOP_MYSQL_PASSWORD} &>>$LOG
+fi
+STAT $?
+
