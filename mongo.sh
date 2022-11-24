@@ -16,7 +16,7 @@ PRINT "Enable MongoDB"
 systemctl enable mongod &>>$LOG
 STAT $?
 
-PRINT"Restart MongoDB Service"
+PRINT "Restart MongoDB Service"
 systemctl restart mongod &>>$LOG
 STAT $?
 
