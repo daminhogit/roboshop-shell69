@@ -20,8 +20,9 @@ STAT$?
 mv frontend-main/static/* . &>>$LOG
 STAT$?
 
-
-mv frontend-main/localhost.conf /etc/nginx/default.d/roboshop.conf
+PRINT "Move Config Files"
+mv frontend-main/localhost.conf /etc/nginx/default.d/roboshop.conf &>>$LOG
+STAT$?
 
 PRINT "Enable Nginx"
 systemctl enable nginx &>>$LOG
