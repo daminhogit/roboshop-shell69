@@ -14,6 +14,27 @@ PRINT() {
 LOG=/tmp/${COMPONENT}.log
 rm -rf $LOG
 
+SYSTEMD_SETUP () {
+  PRINT "Configure Endpoints for SystemD Configuration"
+    sed -i -e 's/REDIS_ENDPOINT/redis.devopsb69.online/' -e 's/CATALOGUE_ENDPOINT/catalogue.devopsb69.online/' /home/roboshop/${COMPONENT}/systemd.service &>>$LOG
+    STAT $?
+
+    PRINT "Setup SystemD Service"
+    mv /home/roboshop/${COMPONENT}/systemd.service /etc/systemd/system/${COMPONENT}.service &>>$LOG
+    STAT $?
+
+    PRINT "Reload SystemD"
+    systemctl daemon-reload &>>$LOG
+    STAT $?
+
+    PRINT "Restart ${COMPONENT}"
+    systemctl restart ${COMPONENT} &>>$LOG
+    STAT $?
+
+    PRINT "Enable ${COMPONENT} Service"
+    systemctl enable ${COMPONENT} &>>$LOG
+    STAT $?
+}
 
 NODEJS() {
   PRINT "Install NodeJS Repos"
@@ -51,24 +72,26 @@ NODEJS() {
   npm install &>>$LOG
   STAT $?
 
-  PRINT "Configure Endpoints for SystemD Configuration"
-  sed -i -e 's/REDIS_ENDPOINT/redis.devopsb69.online/' -e 's/CATALOGUE_ENDPOINT/catalogue.devopsb69.online/' /home/roboshop/${COMPONENT}/systemd.service &>>$LOG
-  STAT $?
+  SYSTEMD_SETUP
+}
 
+JAVA () {
+PRINT "Install Maven"
+yum install maven -y &>>$LOG
+STAT $?
 
-  PRINT "Setup SystemD Service"
-  mv /home/roboshop/${COMPONENT}/systemd.service /etc/systemd/system/${COMPONENT}.service &>>$LOG
-  STAT $?
+useradd roboshop
 
-  PRINT "Reload SystemD"
-  systemctl daemon-reload &>>$LOG
-  STAT $?
+cd /home/roboshop
+curl -s -L -o /tmp/shipping.zip "https://github.com/roboshop-devops-project/shipping/archive/main.zip"
+unzip /tmp/shipping.zip
+mv shipping-main shipping
+cd shipping
+mvn clean package
 
-  PRINT "Restart ${COMPONENT}"
-  systemctl restart ${COMPONENT} &>>$LOG
-  STAT $?
+PRINT "Download Maven Dependecies"
+mv target/shipping-1.0.jar shipping.jar &>>$LOG
+STAT $?
 
-  PRINT "Enable ${COMPONENT} Service"
-  systemctl enable ${COMPONENT} &>>$LOG
-  STAT $?
+SYSTEMD_SETUP
 }
