@@ -84,6 +84,7 @@ PRINT "Adding User"
 useradd roboshop &>>$LOG
 STAT $?
 
+
 cd /home/roboshop
 
 PRINT "Download App Content"
