@@ -80,14 +80,26 @@ PRINT "Install Maven"
 yum install maven -y &>>$LOG
 STAT $?
 
-useradd roboshop
+PRINT "Adding User"
+useradd roboshop &>>$LOG
+STAT $?
 
 cd /home/roboshop
-curl -s -L -o /tmp/shipping.zip "https://github.com/roboshop-devops-project/shipping/archive/main.zip"
-unzip /tmp/shipping.zip
+
+PRINT "Download App Content"
+curl -s -L -o /tmp/shipping.zip "https://github.com/roboshop-devops-project/shipping/archive/main.zip" &>>$LOG
+STAT $?
+
+PRINT "Extracting App Content"
+unzip /tmp/shipping.zip &>>$LOG
+STAT $?
+
 mv shipping-main shipping
 cd shipping
-mvn clean package
+
+PRINT "Clean Package"
+mvn clean package &>>$LOG
+STAT $?
 
 PRINT "Download Maven Dependecies"
 mv target/shipping-1.0.jar shipping.jar &>>$LOG
