@@ -139,4 +139,13 @@ PYTHON () {
   PRINT "Installing Dependencies"
   pip3 install -r requirements.txt &>>$LOG
   STAT $?
+
+USER_ID=(id -u roboshop)
+GROUP_ID=(id -g roboshop)
+sed -i -e "/uid/ c uid = ${USER_ID}" ${COMPONENT}.ini
+sed -i -e "/gid/ c gid = $GROUP_ID}" ${COMPONENT}.ini
+
+
+SYSTEMD_SETUP
+
 }
