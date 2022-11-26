@@ -109,3 +109,34 @@ STAT $?
 
 SYSTEMD_SETUP
 }
+
+
+PYTHON () {
+  PRINT "Installing Python"
+  yum install python36 gcc python3-devel -y &>>$LOG
+  STAT $?
+
+  PRINT "Adding User"
+  useradd roboshop &>>$LOG
+  STAT $?
+
+  cd /home/roboshop
+
+  PRINT "Download Payment App"
+  curl -L -s -o /tmp/payment.zip "https://github.com/roboshop-devops-project/payment/archive/main.zip" &>>$LOG
+  STAT $?
+
+  PRINT "Extracting Payment App"
+  unzip /tmp/payment.zip &>>$LOG
+  STAT $?
+
+  mv payment-main payment &>>$LOG
+  STAT $?
+
+  cd /home/roboshop/payment  &>>$LOG
+  STAT $?
+
+  PRINT "Installing Dependencies"
+  pip3 install -r requirements.txt &>>$LOG
+  STAT $?
+}
