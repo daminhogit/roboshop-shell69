@@ -1,4 +1,4 @@
-COMPONENT=rabbitmq
+COMPONENT=rabbit
 source common.sh
 
 PRINT "Download Rabbit App"
