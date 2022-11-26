@@ -89,22 +89,22 @@ STAT $?
 cd /home/roboshop
 
 PRINT "Download App Content"
-curl -s -L -o /tmp/shipping.zip "https://github.com/roboshop-devops-project/shipping/archive/main.zip" &>>$LOG
+curl -s -L -o /tmp/${COMPONENT}.zip "https://github.com/roboshop-devops-project/shipping/archive/main.zip" &>>$LOG
 STAT $?
 
 PRINT "Extracting App Content"
-unzip /tmp/shipping.zip &>>$LOG
+unzip /tmp/${COMPONENT}.zip &>>$LOG
 STAT $?
 
 mv shipping-main shipping
-cd shipping
+cd ${COMPONENT}
 
 PRINT "Clean Package"
 mvn clean package &>>$LOG
 STAT $?
 
 PRINT "Download Maven Dependecies"
-mv target/shipping-1.0.jar shipping.jar &>>$LOG
+mv target/${COMPONENT}-1.0.jar ${COMPONENT}.jar &>>$LOG
 STAT $?
 
 SYSTEMD_SETUP
