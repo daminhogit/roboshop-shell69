@@ -14,7 +14,7 @@ PRINT() {
 LOG=/tmp/${COMPONENT}.log
 rm -rf $LOG
 
-SYSTEMD_SETUP () {
+SYSTEMD_SETUP() {
   PRINT "Configure Endpoints for SystemD Configuration"
     sed -i -e 's/REDIS_ENDPOINT/redis.devopsb69.online/' -e 's/CATALOGUE_ENDPOINT/catalogue.devopsb69.online/' /home/roboshop/${COMPONENT}/systemd.service &>>$LOG
     mv /home/roboshop/${COMPONENT}/systemd.service /etc/systemd/system/${COMPONENT}
@@ -76,7 +76,7 @@ NODEJS() {
   SYSTEMD_SETUP
 }
 
-JAVA () {
+JAVA() {
 PRINT "Install Maven"
 yum install maven -y &>>$LOG
 STAT $?
@@ -111,7 +111,7 @@ SYSTEMD_SETUP
 }
 
 
-PYTHON () {
+PYTHON() {
   PRINT "Installing Python"
   yum install python36 gcc python3-devel -y &>>$LOG
   STAT $?
@@ -140,10 +140,10 @@ PYTHON () {
   pip3 install -r requirements.txt &>>$LOG
   STAT $?
 
-USER_ID=(id -u roboshop)
-GROUP_ID=(id -g roboshop)
-sed -i -e "/uid/ c uid = ${USER_ID}" ${COMPONENT}.ini
-sed -i -e "/gid/ c gid = $GROUP_ID}" ${COMPONENT}.ini
+  USER_ID=(id -u roboshop)
+  GROUP_ID=(id -g roboshop)
+  sed -i -e "/uid/ c uid = ${USER_ID}" ${COMPONENT}.ini
+  sed -i -e "/gid/ c gid = $GROUP_ID}" ${COMPONENT}.ini
 
 
 SYSTEMD_SETUP
