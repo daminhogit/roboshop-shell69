@@ -23,8 +23,8 @@ STAT $?
 mv payment-main payment &>>$LOG
 STAT $?
 
-cd /home/roboshop/payment  &>>$LOG
-STAT $?
+cd /home/roboshop/payment
+
 
 PRINT "Installing Dependencies"
 pip3 install -r requirements.txt &>>$LOG
@@ -38,4 +38,4 @@ sed -i -e "/gid/ c gid = ${GROUP_ID}" ${COMPONENT}.ini
 
 SYSTEMD_SETUP
 
- }
+}
