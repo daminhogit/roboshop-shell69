@@ -32,3 +32,5 @@ PRINT "Restart Nginx"
 systemctl restart nginx &>>$LOG
 STAT $?
 
+PRINT "Good Job"
+
