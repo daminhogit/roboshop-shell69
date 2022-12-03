@@ -37,7 +37,7 @@ fi
 
 if [ -z "$1" ]; then
   echo Input Component name is Needed
-  exit1
+  exit 1
 fi
 
 component=$1
