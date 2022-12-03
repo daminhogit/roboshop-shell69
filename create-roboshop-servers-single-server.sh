@@ -35,7 +35,7 @@ if [ -z "${SGID}" ]; then
   exit 1
 fi
 
-if [ -z "$" ]; then
+if [ -z "$1" ]; then
   echo Input Component name is Needed
   exit1
 fi
