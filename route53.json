@@ -3,7 +3,7 @@
   "Changes": [{
     "Action": "UPSERT",
     "ResourceRecordSet": {
-      "Name": "COMPONENT.damideployedt.bio",
+      "Name": "COMPONENT.damideployed.bio",
       "Type": "A",
       "TTL": 30,
       "ResourceRecords": [{ "Value": "IPADDRESS"}]
